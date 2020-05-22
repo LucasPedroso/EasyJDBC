@@ -52,8 +52,9 @@ public class Operations {
 		
 		boolean success = false;
 		
-		try (PreparedStatement stmt = connection.prepareStatement(query)) {			
-			for (int i = 0; i <= columnsAndValues.values().size() - 1; i++) {
+		try (PreparedStatement stmt = connection.prepareStatement(query)) {
+			int qtdColumns = columnsAndValues.values().size() - 1;
+			for (int i = 0; i <= qtdColumns; i++) {
 				setStatementProcess(stmt, i, columnsAndValues.values().toArray()[i], columnsAndValues);
 			}			
 			success = stmt.executeUpdate() > 0;
@@ -190,10 +191,10 @@ public class Operations {
 		StringBuilder columnsName = new StringBuilder();
 		StringBuilder values = new StringBuilder();				
 		
-		int qtdColumns = columnsAndValues.values().size();
+		int qtdColumns = columnsAndValues.values().size() - 1;
 
-		for (int i = 0; qtdColumns - 1 >= i; i++) {
-			if (i != qtdColumns - 1) {				
+		for (int i = 0; qtdColumns >= i; i++) {
+			if (i != qtdColumns) {				
 				columnsName.append(columnsAndValues.keySet().toArray()[i]).append(", ");
 				values.append("?").append(", ");
 			} else {
@@ -215,10 +216,10 @@ public class Operations {
 		
 		StringBuilder columnsName = new StringBuilder();
 		
-		int qtdColumns = columnsAndValues.values().size();
+		int qtdColumns = columnsAndValues.values().size() - 1;
 
-		for (int i = 0; qtdColumns - 1 >= i; i++) {
-			if (i != qtdColumns - 1) {				
+		for (int i = 0; qtdColumns >= i; i++) {
+			if (i != qtdColumns) {				
 				columnsName.append(columnsAndValues.keySet().toArray()[i]).append(" = ?").append(", ");
 			} else {
 				columnsName.append(columnsAndValues.keySet().toArray()[i]).append(" = ?");
